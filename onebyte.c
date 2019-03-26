@@ -42,10 +42,9 @@ ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 	printk(KERN_ALERT "start reading one byte device!");
 	if (*f_pos == 0) 
 	{
-		int result;
-		result = copy_to_user(buf, onebyte_data, 1);
+		copy_to_user(buf, onebyte_data, 1);
 		*f_pos += 1;
-		return result;
+		return 1;
 	} 
 	else 
 	{
@@ -58,10 +57,9 @@ ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t 
 	printk(KERN_ALERT "start write one byte device!");
 	if (*f_pos == 0) 
 	{
-		int result; 
-		result = copy_from_user(onebyte_data, buf, 1);
+		copy_from_user(onebyte_data, buf, 1);
 		*f_pos += 1;
-		return result;
+		return 1;
 	}
 	else 
 	{
