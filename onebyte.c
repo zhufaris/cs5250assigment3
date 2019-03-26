@@ -39,10 +39,20 @@ int onebyte_release(struct inode *inode, struct file *filep)
 
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 {
+	printk(KERN_ALERT "start reading one byte device!");
+	int result;
+	result = copy_to_user(buf, onebyte_data, 1);
+	return result;
 }
 
 ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos)
 {
+	printk(KERN_ALERT "start write one byte device!");
+	int result;
+	if (count == 0) return 0;
+	if (*f_pos > 0) return -1; 
+	result = copy_to_user(buf, onebyte_data, 1);
+	return result;
 }
 
 static int onebyte_init(void)
